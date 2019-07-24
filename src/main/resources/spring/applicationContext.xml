@@ -1,0 +1,31 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<beans xmlns="http://www.springframework.org/schema/beans"
+       xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
+       xmlns:context="http://www.springframework.org/schema/context"
+       xmlns:aop="http://www.springframework.org/schema/aop"
+       xsi:schemaLocation="http://www.springframework.org/schema/beans
+       http://www.springframework.org/schema/beans/spring-beans.xsd
+       http://www.springframework.org/schema/context
+       http://www.springframework.org/schema/context/spring-context.xsd
+       http://www.springframework.org/schema/aop
+       http://www.springframework.org/schema/aop/spring-aop.xsd">
+
+
+        <description>Spring公共配置</description>
+        <context:annotation-config />
+        <context:component-scan base-package="com.bj.zl.learn.*"/>
+
+        <bean id="sentinelResourceAspect" class="com.alibaba.csp.sentinel.annotation.aspectj.SentinelResourceAspect"></bean>
+
+        <!--<aop:config proxy-target-class="true">
+                <aop:aspect id="aroundAspect" ref="sentinelResourceAspect">
+                        <aop:pointcut id="businessService"
+                                      expression="execution(* com.bj.zl.learn.flow.service.SentinelResourceServiceImpl.testAnnotation(..))"/>
+                        <aop:around pointcut-ref="businessService" method="invokeResourceWithSentinel" />
+                </aop:aspect>
+        </aop:config>-->
+        <aop:aspectj-autoproxy proxy-target-class="false"/><!--声明自动为spring容器中那些配置@aspectJ切面的bean创建代理，织入切面,true使用CGLib动态代理技术织入增强,false表示使用jdk动态代理织入增强-->
+
+        <bean id="sentinelResourceService" class="com.bj.zl.learn.flow.service.SentinelResourceServiceImpl"/>
+
+</beans>

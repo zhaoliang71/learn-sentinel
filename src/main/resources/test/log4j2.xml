@@ -1,0 +1,33 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<Configuration status="info">
+<properties>
+    <property name="patternlayout">%d [%t] %-5p [%c] [%L] - %m%n</property>
+    <!-- 本地测试路径 -->
+    <property name="LOG_HOME">E://export/Logs/zl.learn</property>
+
+</properties>
+
+<Appenders>
+    <Console name="ConsoleM" target="SYSTEM_OUT" follow="true">
+        <PatternLayout pattern="${patternlayout}"/>
+    </Console>
+    <!-- 全局日志 -->
+    <RollingFile name="RootRollingFile" fileName="${LOG_HOME}/console.log"
+                 filePattern="${LOG_HOME}/console.log-%i.log">
+        <PatternLayout pattern="${patternlayout}"/>
+        <Policies>
+            <SizeBasedTriggeringPolicy size="1GB"/>
+        </Policies>
+        <DefaultRolloverStrategy max="20"/>
+    </RollingFile>
+</Appenders>
+<!-- 子目录日志指向设置-->
+<Loggers>
+    <Root level="INFO" name="RootLog"  includeLocation="true">
+        <AppenderRef ref="ConsoleM"/>
+        <AppenderRef ref="RootRollingFile"/>
+    </Root>
+
+</Loggers>
+</Configuration>
+
