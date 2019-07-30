@@ -1,0 +1,12 @@
+@startuml
+SentinelResourceAspect -> SphU:entry(resourceName, entryType, 1, pjp.getArgs())
+SphU -> CtSph:entryWithPriority(resourceWrapper, count, false, args)
+CtSph -> FlowSlot:entry(Context context, ResourceWrapper resourceWrapper, DefaultNode node, int count, boolean prioritized, Object... args)
+FlowSlot -> FlowRuleChecker:checkFlow(this.ruleProvider, resource, context, node, count, prioritized)
+FlowRuleChecker-> DefaultController:canPass(selectedNode, 1, prioritized:flase)
+FlowRuleChecker <-- DefaultController:boolean
+FlowSlot <-- FlowRuleChecker :viod ,throw new FlowException(rule.getLimitApp(), rule);
+CtSph <-- FlowSlot :void
+SphU <-- CtSph :void
+SentinelResourceAspect <-- SphU:void
+@enduml

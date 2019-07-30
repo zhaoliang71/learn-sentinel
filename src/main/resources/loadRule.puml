@@ -1,0 +1,8 @@
+@startuml
+Main -> FlowRuleManger: loadRules(List<FlowRule> rules)
+FlowRuleManger -> FlowPropertyListener: configUpdate(List<FlowRule> rules)
+FlowPropertyListener -> FlowRuleUtil:buildFlowRuleMap(List<FlowRule> list)
+FlowPropertyListener <-- FlowRuleUtil:Map<String, List<FlowRule>>:(赋值Rule的TrafficShapingController属性)
+FlowRuleManger <-- FlowPropertyListener:void:(FlowRuleManager.flowRules.clear()/putAll())
+Main <-- FlowRuleManger:void:(刷新完规则)
+@enduml
